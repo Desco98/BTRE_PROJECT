@@ -117,5 +117,3 @@ dmypy.json
 cython_debug/
 venv
 /static
-
-btre/settings.py  # (if you want to keep the entire file local)

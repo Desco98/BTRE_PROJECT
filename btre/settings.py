@@ -1,9 +1,13 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Loads variables from .env
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -71,11 +75,11 @@ WSGI_APPLICATION = 'btre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'btre',     # Your database name
-        'USER': 'root',         # Your database user
-        'PASSWORD': '12345678', # Your database user's password
-        'HOST': 'localhost',      # Set to 'localhost' or the IP address of your database server
-        'PORT': '3306',           # Default MySQL port
+        'NAME': os.getenv('DB_NAME'),     # Database name
+        'USER': os.getenv('DB_USER'),         # Database user
+        'PASSWORD': os.getenv('DB_PASSWORD'), # Database password
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': '3306',
     }
 }
 
@@ -130,17 +134,15 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Messages
-from django.contrib.messages import constants as messages
-
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
 
 #Email Config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'dsomto98@gmail.com'
-EMAIL_HOST_PASSWORD = 'fkdeqsyqqrvlbzoy'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
